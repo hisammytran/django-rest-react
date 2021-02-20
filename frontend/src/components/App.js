@@ -210,6 +210,7 @@ class App extends Component {
     this.setState({
       modalShow: false
     })
+    this.fetchTasks()
     this.forceUpdate()
   }
   fetchTasks() {
@@ -220,6 +221,7 @@ class App extends Component {
         this.setState({
           data: data
         }))
+      .catch(error=>console.log(error))
   }
   createTask(){
     // if(this.state.activeItem.priority==''){
@@ -243,7 +245,14 @@ class App extends Component {
       }
     })
       .then(response => response.json())
-      .then(json => console.log(json)); 
+      .then(json => console.log(json))
+      .catch(error=>console.log(error))
+    this.setState({
+      activeItem:{
+        priority:'T'
+      }
+    })
+
     this.handleClose()
   }
 
@@ -302,7 +311,7 @@ class App extends Component {
       </Button>
           </Modal.Footer>
         </Modal>
-        <Board todo={tasks}></Board>
+        <Board key ={this.state.data} todo={this.state.data}></Board>
 
       </Container>
 
